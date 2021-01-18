@@ -13,7 +13,7 @@ export const getPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const post = req.body;
-  if (post.creator && post.selectedFile) {
+  if (post.creator) {
     const newPost = new PostMessage(post);
 
     try {

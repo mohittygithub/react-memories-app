@@ -3,8 +3,10 @@ import useStyles from "./styles";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import axios from "axios";
+import { connect } from "react-redux";
+import { createMemory } from "../../redux/actionTypes";
 
-const Form = () => {
+const Form = (props) => {
   const classes = useStyles();
   const [postData, setPostData] = useState({
     creator: "",
@@ -17,8 +19,8 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post("http://localhost:5000/posts", postData);
-    // console.log(response);
+    let response = await axios.post("http://localhost:5000/posts", postData);
+    props.dispatch(createMemory(response.data));
     clear();
   };
   const clear = () => {
@@ -115,4 +117,4 @@ const Form = () => {
     </>
   );
 };
-export default Form;
+export default connect()(Form);
