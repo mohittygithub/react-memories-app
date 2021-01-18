@@ -16,6 +16,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Moment from "react-moment";
 import axios from "axios";
+import { connect } from "react-redux";
+import { deleteMemory } from "../../../redux/actionTypes";
 
 const Post = (props) => {
   const { id, message, title, creator, image, createdAt } = props;
@@ -30,6 +32,7 @@ const Post = (props) => {
   };
 
   const deleteMemory = async (id) => {
+    //props.dispatch(deleteMemory(id));
     console.log(id);
     console.log(`http://localhost:5000/posts/${id}`);
     const response = await axios.delete(`http://localhost:5000/posts/${id}`);
@@ -111,4 +114,4 @@ const Post = (props) => {
   );
 };
 
-export default Post;
+export default connect()(Post);

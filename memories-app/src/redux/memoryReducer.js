@@ -1,3 +1,4 @@
+import axios from "axios";
 import { CREATE, FETCH_FROM_SERVER, FETCH_ALL, DELETE } from "./actionTypes";
 
 const initialState = {
@@ -7,12 +8,12 @@ const initialState = {
 const memories = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_FROM_SERVER:
-      return { data: [action.payload] };
+      return { ...state, data: [action.payload] };
 
     case DELETE:
       return {
         ...state,
-        data: [...state.data, action.id],
+        data: state.data.filter((d) => d.id !== action.id),
       };
     case CREATE:
       return {

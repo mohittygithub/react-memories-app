@@ -15,7 +15,6 @@ import Post from "./post/Post";
 import Form from "../form/Form";
 
 const Posts = (props) => {
-  const [memories, setMemories] = useState([]);
   const classes = useStyles();
 
   return (
@@ -38,7 +37,7 @@ const Posts = (props) => {
       </AppBar>
       <div className={classes.main}>
         <div className={classes.cards}>
-          {memories.map((memory) =>
+          {props.memories.map((memory) =>
             memory.map((mem) => {
               return (
                 <Post

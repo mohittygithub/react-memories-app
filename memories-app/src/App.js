@@ -6,23 +6,24 @@ import Posts from "./components/posts/Posts";
 import { fetchFromServer } from "./redux/actionTypes";
 
 const App = (props) => {
+  let response = [];
+  const fetchData = async () => {
+    response = await axios.get("http://localhost:5000/posts");
+
+    // response = response.data;
+    console.log(response.data);
+    props.dispatch(fetchFromServer(response.data));
+  };
+
   useEffect(() => {
-    let response;
-    axios
-      .get("http://localhost:5000/posts")
-      .then((res) => {
-        response = res.data;
-        props.dispatch(fetchFromServer(response));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    fetchData();
+  });
+
   return (
     <>
       <Posts />
     </>
   );
 };
-const mapStateToProps = (state) => ({ memories: state.memoryReducer.data });
-export default connect(mapStateToProps)(App);
+// const mapStateToProps = (state) => ({ memories: state.memoryReducer.data });
+export default connect()(App);
