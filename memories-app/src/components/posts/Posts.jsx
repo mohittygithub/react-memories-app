@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import { fetchMemories } from "../../redux/actionTypes";
+import { useSelector } from "react-redux";
 import useStyles from "./styles";
 
 import {
@@ -16,6 +16,8 @@ import Form from "../form/Form";
 
 const Posts = (props) => {
   const classes = useStyles();
+  const state = useSelector((state) => state.memoryReducer.state);
+  console.log(state);
 
   return (
     <div className={classes.root}>
@@ -37,21 +39,19 @@ const Posts = (props) => {
       </AppBar>
       <div className={classes.main}>
         <div className={classes.cards}>
-          {props.memories.map((memory) =>
-            memory.map((mem) => {
-              return (
-                <Post
-                  key={mem._id}
-                  id={mem._id}
-                  title={mem.title}
-                  message={mem.message}
-                  creator={mem.creator}
-                  createdAt={mem.createdAt}
-                  image={mem.selectedFile}
-                />
-              );
-            })
-          )}
+          {state.map((memory) => {
+            return (
+              <Post
+                key={memory._id}
+                id={memory._id}
+                title={memory.title}
+                message={memory.message}
+                creator={memory.creator}
+                createdAt={memory.createdAt}
+                image={memory.selectedFile}
+              />
+            );
+          })}
         </div>
         <div>
           <Form />
@@ -61,5 +61,5 @@ const Posts = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({ memories: state.memoryReducer.data });
-export default connect(mapStateToProps)(Posts);
+// const mapStateToProps = (state) => ({ memories: state.memoryReducer.data });
+export default Posts;

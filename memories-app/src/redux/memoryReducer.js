@@ -1,13 +1,11 @@
 import { CREATE, FETCH_FROM_SERVER } from "./actionTypes";
 
-const initialState = {
-  data: [],
-};
+const initialState = [];
 
 const memories = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_FROM_SERVER:
-      return { ...state, data: [action.payload] };
+      return { state: [action.payload] };
     case CREATE:
       return {
         ...state,

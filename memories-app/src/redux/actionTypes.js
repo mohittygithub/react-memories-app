@@ -3,9 +3,9 @@ export const CREATE = "CREATE";
 export const UPDATE = "UPDATE";
 export const DELETE = "DELETE";
 
-export const setStoreState = (payload) => ({
+export const setStoreState = (memories) => ({
   type: FETCH_FROM_SERVER,
-  payload,
+  payload: memories,
 });
 
 export const createMemory = (payload) => ({

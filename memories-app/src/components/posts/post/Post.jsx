@@ -16,7 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Moment from "react-moment";
 import axios from "axios";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { deleteMemory } from "../../../redux/actionTypes";
 
 const Post = (props) => {
@@ -114,4 +114,4 @@ const Post = (props) => {
   );
 };
 
-export default connect()(Post);
+export default Post;

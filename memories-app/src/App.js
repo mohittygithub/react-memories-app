@@ -9,6 +9,7 @@ const App = (props) => {
     let fetchData = await axios.get("http://localhost:5000/posts");
 
     props.dispatch(setStoreState(fetchData.data));
+    console.log(fetchData.data);
   };
   useEffect(() => {
     fetchData();
