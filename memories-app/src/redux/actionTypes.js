@@ -1,14 +1,48 @@
-export const FETCH_FROM_SERVER = "FETCH_FROM_SERVER";
-export const CREATE = "CREATE";
-export const UPDATE = "UPDATE";
-export const DELETE = "DELETE";
+import axios from "axios";
 
-export const setStoreState = (memories) => ({
-  type: FETCH_FROM_SERVER,
-  payload: memories,
-});
+export const FETCH_MEMORIES_REQUEST = "FETCH_MEMORIES_REQUEST";
+export const FETCH_MEMORIES_SUCCESS = "FETCH_MEMORIES_SUCCESS";
+export const FETCH_MEMORIES_FAILURE = "FETCH_MEMORIES_FAILURE";
+export const DELETE_MEMORY = "DELETE_MEMORY";
+export const DELETE_MEMORY_SUCCESS = "DELETE_MEMORY_SUCCESS";
+export const DELETE_MEMORY_FAILURE = "DELETE_MEMORY_FAILURE";
 
-export const createMemory = (payload) => ({
-  type: CREATE,
-  payload,
-});
+export const fetchMemoryRequest = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: FETCH_MEMORIES_REQUEST,
+    });
+
+    const response = await axios.get("http://localhost:5000/posts");
+
+    dispatch({
+      type: FETCH_MEMORIES_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FETCH_MEMORIES_FAILURE,
+      payload: error.message,
+    });
+  }
+};
+
+export const deleteMemory = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_MEMORY,
+    });
+
+    const response = await axios.delete(`http://localhost/posts/${id}`);
+
+    dispatch({
+      type: DELETE_MEMORY_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_MEMORY_FAILURE,
+      payload: error.message,
+    });
+  }
+};

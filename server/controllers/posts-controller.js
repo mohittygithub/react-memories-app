@@ -54,7 +54,8 @@ export const deletePost = async (req, res) => {
   try {
     const deletedPost = await PostMessage.findByIdAndRemove(id);
     //console.log(deletedPost);
-    res.status(201).send(`record with id ${id} has been deleted successfully`);
+    // res.status(201).send(`record with id ${id} has been deleted successfully`);
+    res.status(201).send(id);
   } catch (error) {
     res.status(404).send("unable to delete the record");
   }

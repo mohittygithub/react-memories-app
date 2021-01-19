@@ -15,8 +15,7 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Moment from "react-moment";
-import axios from "axios";
-// import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteMemory } from "../../../redux/actionTypes";
 
 const Post = (props) => {
@@ -26,18 +25,15 @@ const Post = (props) => {
   //   console.log(id, message, title, creator);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const deleteMemory = async (id) => {
-    //props.dispatch(deleteMemory(id));
+  const deleteMem = (id) => {
     console.log(id);
-    console.log(`http://localhost:5000/posts/${id}`);
-    const response = await axios.delete(`http://localhost:5000/posts/${id}`);
-
-    console.log(response);
+    dispatch(deleteMemory(id));
   };
   return (
     <Card className={classes.root}>
@@ -48,7 +44,7 @@ const Post = (props) => {
           </Avatar>
         }
         action={
-          <IconButton onClick={() => deleteMemory(id)} aria-label="settings">
+          <IconButton onClick={() => deleteMem(id)} aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }

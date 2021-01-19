@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import { useSelector } from "react-redux";
 import useStyles from "./styles";
 
@@ -14,10 +13,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Post from "./post/Post";
 import Form from "../form/Form";
 
-const Posts = (props) => {
+const Posts = () => {
   const classes = useStyles();
-  const state = useSelector((state) => state.memoryReducer.state);
-  console.log(state);
+  const memories = useSelector((state) => state.memories.data);
+  console.log(memories);
 
   return (
     <div className={classes.root}>
@@ -39,8 +38,8 @@ const Posts = (props) => {
       </AppBar>
       <div className={classes.main}>
         <div className={classes.cards}>
-          {state.map((memory) => {
-            return (
+          {memories ? (
+            memories.map((memory) => (
               <Post
                 key={memory._id}
                 id={memory._id}
@@ -50,8 +49,10 @@ const Posts = (props) => {
                 createdAt={memory.createdAt}
                 image={memory.selectedFile}
               />
-            );
-          })}
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
         <div>
           <Form />
@@ -61,5 +62,4 @@ const Posts = (props) => {
   );
 };
 
-// const mapStateToProps = (state) => ({ memories: state.memoryReducer.data });
 export default Posts;

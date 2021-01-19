@@ -4,7 +4,6 @@ import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import axios from "axios";
 import { connect } from "react-redux";
-import { createMemory } from "../../redux/actionTypes";
 
 const Form = (props) => {
   const classes = useStyles();
@@ -19,8 +18,7 @@ const Form = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let response = await axios.post("http://localhost:5000/posts", postData);
-    props.dispatch(createMemory(response.data));
+    // let response = await axios.post("http://localhost:5000/posts", postData);
     clear();
   };
   const clear = () => {
