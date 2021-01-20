@@ -1,6 +1,6 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import useStyles from "./styles";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import useStyles from './styles'
 
 import {
   AppBar,
@@ -8,32 +8,32 @@ import {
   IconButton,
   Typography,
   Button,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import Post from "./post/Post";
-import Form from "../form/Form";
+} from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
+import Post from './post/Post'
+import Form from '../form/Form'
 
 const Posts = () => {
-  const classes = useStyles();
-  const memories = useSelector((state) => state.memories.data);
-  console.log(memories);
+  const classes = useStyles()
+  const memories = useSelector((state) => state.memoryReducer.memories)
+  //console.log(memories);
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           <IconButton
-            edge="start"
+            edge='start'
             className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
+            color='inherit'
+            aria-label='menu'
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant='h6' className={classes.title}>
             Memories
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color='inherit'>Login</Button>
         </Toolbar>
       </AppBar>
       <div className={classes.main}>
@@ -59,7 +59,7 @@ const Posts = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Posts;
+export default Posts
