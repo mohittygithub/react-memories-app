@@ -4,13 +4,15 @@ import {
   FETCH_MEMORIES_FAILURE,
   DELETE_MEMORY_FAILURE,
   DELETE_MEMORY_SUCCESS,
-} from './actionTypes'
+  CREATE_MEMORY_SUCCESS,
+  CREATE_MEMORY_FAILURE,
+} from "./actionTypes";
 
 const initialState = {
   loading: false,
   memories: [],
-  error: '',
-}
+  error: "",
+};
 
 const memoryReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,38 +20,48 @@ const memoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: '',
-      }
+        error: "",
+      };
     case FETCH_MEMORIES_FAILURE:
       return {
         ...state,
         loading: false,
-        error: 'unable to fetch data from server',
-      }
+        error: "unable to fetch data from server",
+      };
     case FETCH_MEMORIES_SUCCESS:
       return {
         ...state,
         loading: false,
         memories: action.payload,
-        error: '',
-      }
-
+        error: "",
+      };
+    case CREATE_MEMORY_SUCCESS:
+      return {
+        ...state,
+        memories: [...state.memories, action.payload],
+      };
+    case CREATE_MEMORY_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: "unable to fetch data from server",
+      };
     case DELETE_MEMORY_SUCCESS:
       return {
         ...state,
         loading: false,
-        memories: state.memories.filter((d) => d._id !== action.payload),
-        error: '',
-      }
+        memories: state.memories.filter((d) => d._id !== action.payload.id),
+        error: "",
+      };
     case DELETE_MEMORY_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default memoryReducer
+export default memoryReducer;

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import useStyles from "./styles";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import axios from "axios";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createMemory } from "../../redux/actionTypes";
 
-const Form = (props) => {
+const Form = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -17,8 +18,10 @@ const Form = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // let response = await axios.post("http://localhost:5000/posts", postData);
+    // console.log(postData);
+    postData.creator
+      ? dispatch(createMemory(postData))
+      : alert("Please provide creator name and select an image to upload");
     clear();
   };
   const clear = () => {
@@ -40,7 +43,7 @@ const Form = (props) => {
           className={`${classes.root} ${classes.form}`}
           onSubmit={handleSubmit}
         >
-          <Typography variant="h6">a memory</Typography>
+          <Typography variant="h6">Creating a memory</Typography>
           <TextField
             name="creator"
             label="Creator"
@@ -49,9 +52,7 @@ const Form = (props) => {
             required
             value={postData.creator}
             onChange={(e) =>
-              setPostData(
-                e.target.value && { ...postData, creator: e.target.value }
-              )
+              setPostData({ ...postData, creator: e.target.value })
             }
           />
           <TextField
@@ -68,8 +69,8 @@ const Form = (props) => {
             name="message"
             label="Message"
             variant="outlined"
-            fullWidth
             value={postData.message}
+            fullWidth
             onChange={(e) =>
               setPostData({ ...postData, message: e.target.value })
             }
@@ -97,6 +98,7 @@ const Form = (props) => {
             color="primary"
             size="large"
             type="submit"
+            className={classes.buttonSubmit}
             fullWidth
           >
             Submit
@@ -115,4 +117,4 @@ const Form = (props) => {
     </>
   );
 };
-export default connect()(Form);
+export default Form;
