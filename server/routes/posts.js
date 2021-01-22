@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get('/', getMemories)
 router.post('/', createMemory)
-router.post('/:id', updateMemory)
+router.put('/:id', updateMemory)
 router.delete('/:id', deleteMemory)
 
 export default router
