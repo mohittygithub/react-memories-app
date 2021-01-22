@@ -1,72 +1,75 @@
-import mongoose from 'mongoose'
-import User from '../models/users.js'
+import mongoose from "mongoose";
+import User from "../models/users.js";
+import bcrypt from "bcryptjs";
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find()
+    const users = await User.find();
     const usersObject = {
-      message: 'success',
+      message: "success",
       totalRecords: users.length,
       users: users,
-    }
+    };
 
-    res.status(200).send(usersObject)
+    res.status(200).send(usersObject);
   } catch (error) {
-    res.send(404).json({ message: error.message })
+    res.send(404).json({ message: error.message });
   }
-}
+};
 
 export const getUserById = async (req, res) => {
-  const _id = req.params.id
+  const _id = req.params.id;
   try {
-    const user = await User.findById(_id)
-    res.status(200).send(user)
+    const user = await User.findById(_id);
+    res.status(200).send(user);
   } catch (error) {
-    res.status(400).json({ message: error.message })
+    res.status(400).json({ message: error.message });
   }
-}
+};
 
 export const createUser = async (req, res) => {
-  const user = req.body
-  const newUser = new User(user)
+  const user = req.body;
+  user.password = await bcrypt.hash(user.password, 10);
+  const newUser = new User(user);
 
   try {
-    const isPresent = await User.findOne({ email: user.email })
+    const isPresent = await User.findOne({ email: user.email });
     if (isPresent) {
-      res.status(400).json({ message: `email ${user.email} already exists` })
+      res.status(400).json({ message: `email ${user.email} already exists` });
     } else {
-      await newUser.save()
-      res.status(201).send(newUser)
+      await newUser.save();
+      res.status(201).json({ message: "success", id: newUser._id });
     }
   } catch (error) {
-    res.status(404).json({ message: error.message })
+    res.status(404).json({ message: error.message });
   }
-}
+};
 
 export const updateUser = async (req, res) => {
-  const id = req.params.id
-  const _id = id
-  const user = req.body
+  const id = req.params.id;
+  const _id = id;
+  const user = req.body;
   // console.log(_id, user)
   // res.send('hit')
   try {
     const updatedUser = await User.findByIdAndUpdate(
-      { ...user, _id },
+      _id,
+      { ...user },
       { new: true }
-    )
-    res.status(201).send(updateUser)
+    );
+    res.status(201).send(updatedUser);
   } catch (error) {
-    res.status(400).json({ message: error.message })
+    res.status(400).json({ message: error.message });
   }
-}
+};
 
 export const deleteUserById = async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   try {
-    await User.findByIdAndRemove(id)
-    res.status(201).json({ id: id, message: 'record deleted' })
+    await User.findByIdAndRemove(id);
+    res.status(201).json({ id: id, message: "record deleted" });
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
-}
+};
